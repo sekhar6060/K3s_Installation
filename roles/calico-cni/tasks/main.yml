@@ -1,0 +1,7 @@
+- name: "Source kubeconfig for executing kubectl command"
+  shell: |
+    export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+    kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+    kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+    kubectl create -f multus-daemonset.yml
+    cp net-plugins/* /opt/cni/bin

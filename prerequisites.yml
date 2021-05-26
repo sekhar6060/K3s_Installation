@@ -1,0 +1,14 @@
+- hosts: all
+  gather_facts: yes
+  vars:
+     DOCKER_VERSION: 18.06.3
+
+  become_user: root
+  become: yes
+  become_method: sudo
+
+  roles:
+    - docker
+    - k3s
+    - calico-cni
+    - helm3

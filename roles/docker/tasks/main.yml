@@ -1,0 +1,30 @@
+- name: Upgrade all packages
+  yum:
+    name: * 
+    state: latest
+
+- name: Install pre-requisite packages
+  yum:
+   name: "{{item}}"
+   state: latest
+  with_items:
+   - yum-utils
+   - device-mapper-persistent-data
+   - lvm2
+   - tar 
+   - wget
+
+- name: Configure Manager
+  yum:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+    state: present
+
+- name: Install desired version of docker
+  yum:
+    name: "{{item}}"
+    state: present
+  loop:
+    - "docker-ce={{ DOCKER_VERSION }}"
+    - "docker-ce-cli={{ DOCKER_VERSION }}"
+    - containerd.io 
